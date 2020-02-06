@@ -7,7 +7,6 @@ package jsonschema
 import (
 	"bytes"
 	"encoding/base64"
-	"encoding/json"
 )
 
 // Decoders is a registry of functions, which know how to decode

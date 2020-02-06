@@ -16,8 +16,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-
-	"github.com/santhosh-tekuri/jsonschema/v2"
 )
 
 // Client is the default HTTP Client used to Get the resource.

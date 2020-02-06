@@ -5,7 +5,7 @@
 package jsonschema
 
 import (
-	"encoding/json"
+	jsoniter "github.com/json-iterator/go"
 	"fmt"
 	"io"
 	"math/big"
@@ -16,6 +16,7 @@ import (
 	"unicode/utf8"
 )
 
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 // A Schema represents compiled version of json-schema.
 type Schema struct {
 	URL string // absolute url of the resource.
@@ -459,7 +460,7 @@ func (s *Schema) validate(v interface{}) error {
 			}
 		}
 
-	case json.Number, float64, int, int32, int64:
+	case jsoniter.Number, float64, int, int32, int64:
 		num, _ := new(big.Float).SetString(fmt.Sprint(v))
 		if s.Minimum != nil && num.Cmp(s.Minimum) < 0 {
 			errors = append(errors, validationError("minimum", "must be >= %v but found %v", s.Minimum, v))
@@ -499,7 +500,7 @@ func jsonType(v interface{}) string {
 		return "null"
 	case bool:
 		return "boolean"
-	case json.Number, float64, int, int32, int64:
+	case jsoniter.Number, float64, int, int32, int64:
 		return "number"
 	case string:
 		return "string"
@@ -545,8 +546,8 @@ func equals(v1, v2 interface{}) bool {
 		}
 		return true
 	case "number":
-		num1, _ := new(big.Float).SetString(string(v1.(json.Number)))
-		num2, _ := new(big.Float).SetString(string(v2.(json.Number)))
+		num1, _ := new(big.Float).SetString(string(v1.(jsoniter.Number)))
+		num2, _ := new(big.Float).SetString(string(v2.(jsoniter.Number)))
 		return num1.Cmp(num2) == 0
 	default:
 		return v1 == v2

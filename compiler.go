@@ -5,8 +5,8 @@
 package jsonschema
 
 import (
-	"encoding/json"
 	"fmt"
+	jsoniter "github.com/json-iterator/go"
 	"io"
 	"math/big"
 	"regexp"
@@ -313,7 +313,7 @@ func (c Compiler) compileMap(r *resource, s *Schema, base string, m map[string]i
 
 	loadInt := func(pname string) int {
 		if num, ok := m[pname]; ok {
-			i, _ := num.(json.Number).Int64()
+			i, _ := num.(jsoniter.Number).Int64()
 			return int(i)
 		}
 		return -1
@@ -427,7 +427,7 @@ func (c Compiler) compileMap(r *resource, s *Schema, base string, m map[string]i
 
 	loadFloat := func(pname string) *big.Float {
 		if num, ok := m[pname]; ok {
-			r, _ := new(big.Float).SetString(string(num.(json.Number)))
+			r, _ := new(big.Float).SetString(string(num.(jsoniter.Number)))
 			return r
 		}
 		return nil

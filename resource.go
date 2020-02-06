@@ -5,7 +5,6 @@
 package jsonschema
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -32,9 +31,9 @@ func DecodeJSON(r io.Reader) (interface{}, error) {
 	if err := decoder.Decode(&doc); err != nil {
 		return nil, err
 	}
-	if t, _ := decoder.Token(); t != nil {
-		return nil, fmt.Errorf("invalid character %v after top-level value", t)
-	}
+	//if t, _ := decoder.Token(); t != nil {
+	//	return nil, fmt.Errorf("invalid character %v after top-level value", t)
+	//}
 	return doc, nil
 }
 
